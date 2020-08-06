@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    width: 320px;
+    height: auto;
+    padding: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+.lbl-running {
+    font-size: 16px;
+    display: none;
+}
+.lbl-finished {
+    font-size: 16px;
+    display: none;
+}
+.btn-start {
+    width: 100px;
+    margin-top: 25px;
+    display: none;
+}
+.btn-download {
+    width: 100px;
+    margin-top: 10px;
+    display: none;
+}

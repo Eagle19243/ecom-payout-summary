@@ -1,0 +1,9 @@
+{
+  "name": "ecom-payout-summary",
+  "version": "1.0.0",
+  "description": "This chrome extension works to make a report to google sheet from csv",
+  "scripts": {
+    "pack": "rm *.zip; cd public; zip -r ../ecom-payout-summary.zip *"
+  },
+  "author": "Eagle19243"
+}

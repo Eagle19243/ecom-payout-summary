@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Ecom Payout Summary</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap-select/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../vendors/ladda/ladda-themeless.min.css">
+    <link rel="stylesheet" href="../fonts/web-icons/web-icons.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container text-center">
+        <div class="form-group">
+            <div class="input-group input-group-file">
+                <input type="text" class="form-control" id="file_name" readonly="" placeholder="Choose file...">
+                <span class="input-group-btn">
+                    <span class="btn btn-success btn-file">
+                        <i class="icon wb-upload" aria-hidden="true"></i>
+                        <input type="file" id="file_chooser" accept=".csv">
+                    </span>
+                </span>
+            </div>
+        </div>
+        <input type="text" class="form-control" id="sheet_url" placeholder="Google Sheet URL">
+        <input type="text" class="form-control" id="orders_tab" placeholder="Orders Tab">
+        <input type="text" class="form-control" id="paid_orders_tab" placeholder="Paid Orders Tab">
+        <button type="button" class="btn btn-primary ladda-button btn-start" data-style="slide-right">Start</button>
+    </div>
+</body>    
+<script src="../vendors/jquery/jquery.min.js"></script>
+<script src="../vendors/jquery/jquery.csv.min.js"></script>
+<script src="../vendors/bootstrap/bootstrap.min.js"></script>
+<script src="../vendors/ladda/spin.min.js"></script>
+<script src="../vendors/ladda/ladda.min.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/global.js"></script>
+<script src="../js/options.js"></script>
+<script src="https://apis.google.com/js/client.js?onload=onGoogleAPILoad"></script>
+</html>

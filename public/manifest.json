@@ -2,6 +2,7 @@
     "name": "Ecom Payout Summary",
     "version": "1.0.0",
     "description": "This chrome extension works to make a report to google sheet from csv",
+    "author": "Eagle19243",
     "manifest_version": 2,
     "icons": {
         "16": "images/icon-16.png",
@@ -9,20 +10,27 @@
         "48": "images/icon-48.png",
         "128": "images/icon-128.png"
     },
-    "browser_action": {
-        "default_icon": "images/icon-48.png",
-        "default_title": "Ecom Payout Summary",
-        "default_popup": "html/popup.html"
+    "options_page": "html/options.html",
+    "page_action": {
+        "default_icon": {
+            "16": "images/icon-16.png",
+            "32": "images/icon-32.png",
+            "48": "images/icon-48.png"
+        }
     },
     "background": {
-        "scripts": [
-            "js/background.js"
-        ],
+        "page": "html/background.html",
         "persistent": true
     },
     "permissions": [
         "storage",
-        "tabs"
-    ]
+        "identity"
+    ],
+    "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self'",
+    "oauth2": {
+        "client_id": "567918662206-pnmtg2fq09nh212kfatd06mc5307g44t.apps.googleusercontent.com",
+        "scopes":["https://www.googleapis.com/auth/spreadsheets"]
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt43JNI/BJxva60qblH86kOgWXlnMlgNccJgg9GBvS4F+zcSE1q2IKHYSE4cL+9WkZbSsGOwoOlB8xrpV+VZzcOkk/eH5e2PSOx6jnPPfurOyDau1fW2g4D///wP4r97km/POXmGLlc4cTryv6/gwFmRqLYLvLZVTbqblBpdJqdzIil+RWwcg9HyEg3cfResYQJhVmmDh7Y7XD3DI49Dk6oxTr4WMqwYKWk2kEpvKPs8U/xBLE4x3AV1Dx98Q2/q8E85MMs3J8OVqpzOUWZjPHBUIQaNV2hKn/3ozANsa1L+dooiemvp/0Otf/HZX38WjBSJa7bUhaZrjlFud1v1WAQIDAQAB"
 }
   

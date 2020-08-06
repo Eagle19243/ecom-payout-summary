@@ -1,26 +1,19 @@
 .container {
-    display: flex;
-    width: 320px;
-    height: auto;
-    padding: 30px;
-    flex-direction: column;
-    align-items: center;
+  padding-top: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
 }
-.lbl-running {
-    font-size: 16px;
-    display: none;
+#sheet_url {
+  margin-bottom: 20px;
 }
-.lbl-finished {
-    font-size: 16px;
-    display: none;
+#orders_tab {
+  margin-bottom: 20px;
+}
+#paid_orders_tab {
+  margin-bottom: 20px;
 }
 .btn-start {
-    width: 100px;
-    margin-top: 25px;
-    display: none;
-}
-.btn-download {
-    width: 100px;
-    margin-top: 10px;
-    display: none;
+  width: 150px;
+  margin-top: 20px;
 }

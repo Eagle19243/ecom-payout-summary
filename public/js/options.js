@@ -54,15 +54,14 @@ async function btnStartClicked() {
     };
 
     for (const paidOrder of paidOrders) {
-        const gOrderRowNum   = getRowNum(paidOrder, gOrders);
-        const gOrderColCount = gOrders[9].length;
+        const gOrderRowNum   = getRowNum(paidOrder.orderNum, gOrders);
         const rowData        = { values: [] };
         
         if (gOrderRowNum == -1) {
             continue;
         }
 
-        if (getRowNum(paidOrder, gPaidOrders) > -1) {
+        if (getRowNum(paidOrder.orderNum, gPaidOrders) > -1) {
             continue;
         }
 
@@ -119,6 +118,10 @@ async function btnStartClicked() {
                 }
             }
 
+            if (paidOrder.shouldRedColored) {
+                backgroundColor = Colors.red;
+            }
+
             cellData.userEnteredFormat.backgroundColor = backgroundColor;
             cellData.userEnteredFormat.horizontalAlignment = alignment;
             
@@ -147,12 +150,30 @@ function fileChanged() {
 
     reader.onload = function() {
         try {
-            const data = $.csv.toArrays(reader.result);
+            let data = $.csv.toArrays(reader.result);
             data.shift();
 
-            paidOrders = data.map(function(a) {
-                return a[2];
+            data = data.map(function(a) {
+                return { 
+                    orderNum    : a[2],
+                    ordertype   : a[5] 
+                };
             });
+
+            paidOrders = data.filter(function(item, index) {
+                return index === data.findIndex(function(obj) {
+                    return JSON.stringify(obj) === JSON.stringify(item);
+                });
+            });
+
+            let lastOrderNum = null;
+            for (let i = 0; i< paidOrders.length; i++) {
+                if (paidOrders[i].orderNum === lastOrderNum) {
+                    paidOrders[i].shouldRedColored = true;
+                }
+
+                lastOrderNum = paidOrders[i].orderNum;
+            }
         } catch (error) {
             console.log(error.message);
             paidOrders = [];

@@ -17,5 +17,6 @@ const Colors = {
     'AMEX-CHRIS'    : { red: 0.0,   green: 1.0,   blue: 0.0   },
     'profit'        : { red: 0.714, green: 0.843, blue: 0.659 },
     'roiFontColor'  : { red: 0.22,  green: 0.463, blue: 0.114 },
+    'red'           : { red: 1.0,   green: 0.0,   blue: 0.0   },
     'default'       : { red: 1.0,   green: 0.949, blue: 0.8   }
 }

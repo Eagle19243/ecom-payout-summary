@@ -1,6 +1,6 @@
 {
     "name": "Ecom Payout Summary",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "This chrome extension works to make a report to google sheet from csv",
     "author": "Eagle19243",
     "manifest_version": 2,

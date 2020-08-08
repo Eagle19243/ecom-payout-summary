@@ -1,4 +1,4 @@
-const API_KEY = 'AIzaSyCuOlyB9ftUJiC-Qd6f2_QxvToT99TS--4';
+const API_KEY = 'AIzaSyDIR78QmZSrwYXqVbd_AuNdZOw34QU4lu4';
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 const Colors = {
     'AMEX-Bonvoy'   : { red: 0.275, green: 0.741, blue: 0.776 },
@@ -18,5 +18,7 @@ const Colors = {
     'profit'        : { red: 0.714, green: 0.843, blue: 0.659 },
     'roiFontColor'  : { red: 0.22,  green: 0.463, blue: 0.114 },
     'red'           : { red: 1.0,   green: 0.0,   blue: 0.0   },
+    'white'         : { red: 1.0,   green: 1.0,   blue: 1.0   },
+    'black'         : { red: 0.0,   green: 0.0,   blue: 0.0   },
     'default'       : { red: 1.0,   green: 0.949, blue: 0.8   }
 }

@@ -23,7 +23,7 @@ async function btnStartClicked() {
         spreadsheetId: spreadsheetId,
         range: orderTab
     });
-    const gPaidOrders   = gPaidOrderRes.result.values;
+    let gPaidOrders     = gPaidOrderRes.result.values;
     const gOrders       = gOrderRes.result.values;
     const gSpreadSheet  = await gapi.client.sheets.spreadsheets.get({
         spreadsheetId: spreadsheetId
@@ -38,7 +38,7 @@ async function btnStartClicked() {
             requests: []
         }
     };
-    const requestPaidOrder = {
+    let requestPaidOrder = {
         spreadsheetId: spreadsheetId,
         resource: {
             requests: [
@@ -106,9 +106,14 @@ async function btnStartClicked() {
 
             if (col == 0) {
                 backgroundColor = Colors[value] || Colors.default;
+            } else if (col == 3 && value != "#DIV/0!") {
+                delete cellData.userEnteredValue.stringValue;
+                cellData.userEnteredValue.numberValue = Number(value.replace(/,/g, ''));
             } else if (col == 11) {
                 backgroundColor = rowData.values[0].userEnteredFormat.backgroundColor;
             } else if (col == 14) {
+                delete cellData.userEnteredValue.stringValue;
+                cellData.userEnteredValue.numberValue = value;
                 backgroundColor = Colors.profit;
             } else if (col > 14 && col < 29) {
                 if (value != '') {
@@ -138,8 +143,196 @@ async function btnStartClicked() {
         requestPaidOrder.resource.requests[0].appendCells.rows.push(rowData);
     }
     
-    gOrderRes = await gapi.client.sheets.spreadsheets.batchUpdate(requestOrder);
-    gPaidOrderRes = await gapi.client.sheets.spreadsheets.batchUpdate(requestPaidOrder);   
+    if (requestOrder.resource.requests.length > 0) { 
+        await gapi.client.sheets.spreadsheets.batchUpdate(requestOrder);
+    }
+
+    if (requestPaidOrder.resource.requests[0].appendCells.rows.length > 0) {
+        await gapi.client.sheets.spreadsheets.batchUpdate(requestPaidOrder);
+    }
+    
+    gPaidOrderRes   = await gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: spreadsheetId,
+        range: paidOrderTab
+    });
+    gPaidOrders = gPaidOrderRes.result.values;
+
+    if (gPaidOrders[0][0] != 'Card Used') {
+        requestPaidOrder = {
+            spreadsheetId: spreadsheetId,
+            resource: {
+                requests: [
+                    {
+                        insertDimension: {
+                            range: {
+                                sheetId: gPaidOrderSheetId,
+                                dimension: 1, // ROWS
+                                startIndex: 0,
+                                endIndex: 8
+                            },
+                            inheritFromBefore: false
+                        }
+                    }
+                ]
+            }
+        };
+        gPaidOrderRes = await gapi.client.sheets.spreadsheets.batchUpdate(requestPaidOrder);
+    
+        requestPaidOrder = {
+            spreadsheetId: spreadsheetId,
+            resource: {
+                requests: [
+                    {
+                        updateCells: {
+                            rows: [],
+                            fields: '*',
+                            range: {
+                                sheetId: gPaidOrderSheetId,
+                                startRowIndex: 0,
+                                endRowIndex: 8,
+                                startColumnIndex: 0,
+                                endColumnIndex: 13
+                            }
+                        }
+                    }
+                ]
+            }
+        };
+    
+        for (let i = 1; i < 9; i++) {
+            const rowData       = { values: [] };
+    
+            for (let j = 1; j < 14; j++) {
+                const cellData      = {
+                    userEnteredValue: {
+                    },
+                    userEnteredFormat: {
+                        backgroundColor: Colors.white,
+                        horizontalAlignment: 3,
+                        textFormat: {
+                            foregroundColor: Colors.black
+                        }
+                    }
+                }
+    
+                if (i === 1 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'Card Used';
+                    cellData.userEnteredFormat.horizontalAlignment = 2;
+                    cellData.userEnteredFormat.textFormat.bold = true;
+                } else if (i === 1 && j === 2) {
+                    cellData.userEnteredValue.stringValue = 'Total Cost';
+                    cellData.userEnteredFormat.horizontalAlignment = 2;
+                    cellData.userEnteredFormat.textFormat.bold = true;
+                } else if (i === 1 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'Card Used';
+                    cellData.userEnteredFormat.horizontalAlignment = 2;
+                    cellData.userEnteredFormat.textFormat.bold = true;
+                } else if (i === 1 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'Total Cost';
+                    cellData.userEnteredFormat.horizontalAlignment = 2;
+                    cellData.userEnteredFormat.textFormat.bold = true;
+                } else if (i === 1 && j === 7) {
+                    cellData.userEnteredValue.stringValue = 'Total Profit';
+                    cellData.userEnteredFormat.horizontalAlignment = 2;
+                    cellData.userEnteredFormat.textFormat.bold = true;
+                } else if (i === 1 && j === 8) {
+                    cellData.userEnteredValue.formulaValue = '=SUM(O10:O)';
+                    cellData.userEnteredFormat.horizontalAlignment = 2;
+                } else if (i === 2 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'AMEX-Bonvoy';
+                    cellData.userEnteredFormat.backgroundColor = Colors['AMEX-Bonvoy'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 3 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'AMEX-Blue';
+                    cellData.userEnteredFormat.backgroundColor = Colors['AMEX-Blue'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 4 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'AMEX_ABP (5%)';
+                    cellData.userEnteredFormat.backgroundColor = Colors['AMEX_ABP (5%)'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 5 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'P-3783';
+                    cellData.userEnteredFormat.backgroundColor = Colors['P-3783'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 6 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'BB-3588';
+                    cellData.userEnteredFormat.backgroundColor = Colors['BB-3588'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 7 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'AMEX-Personal';
+                    cellData.userEnteredFormat.backgroundColor = Colors['AMEX-Personal'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 8 && j === 1) {
+                    cellData.userEnteredValue.stringValue = 'AMZ Credit';
+                    cellData.userEnteredFormat.backgroundColor = Colors['AMZ Credit'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 2 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'CHASE';
+                    cellData.userEnteredFormat.backgroundColor = Colors['CHASE'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 3 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'Capital One';
+                    cellData.userEnteredFormat.backgroundColor = Colors['Capital One'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 4 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'HD Gift Card';
+                    cellData.userEnteredFormat.backgroundColor = Colors['HD Gift Card'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 5 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'Merrick';
+                    cellData.userEnteredFormat.backgroundColor = Colors['Merrick'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 6 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'Citizens';
+                    cellData.userEnteredFormat.backgroundColor = Colors['Citizens'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 7 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'WF-3994';
+                    cellData.userEnteredFormat.backgroundColor = Colors['WF-3994'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 8 && j === 3) {
+                    cellData.userEnteredValue.stringValue = 'AMEX-CHRIS';
+                    cellData.userEnteredFormat.backgroundColor = Colors['AMEX-CHRIS'];
+                    cellData.userEnteredFormat.horizontalAlignment = 1;
+                } else if (i === 2 && j === 2) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A2, D10:D)';
+                } else if (i === 3 && j === 2) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A3, D10:D)';
+                } else if (i === 4 && j === 2) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A4, D10:D)';
+                } else if (i === 5 && j === 2) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A5, D10:D)';
+                } else if (i === 6 && j === 2) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A6, D10:D)';
+                } else if (i === 7 && j === 2) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A7, D10:D)';
+                } else if (i === 8 && j === 2) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A8, D10:D)';
+                } else if (i === 2 && j === 4) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C2, D10:D)';
+                } else if (i === 3 && j === 4) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C3, D10:D)';
+                } else if (i === 4 && j === 4) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C4, D10:D)';
+                } else if (i === 5 && j === 4) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C5, D10:D)';
+                } else if (i === 6 && j === 4) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C6, D10:D)';
+                } else if (i === 7 && j === 4) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C7, D10:D)';
+                } else if (i === 8 && j === 4) {
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C8, D10:D)';
+                } else {
+                    cellData.userEnteredValue.stringValue = '';
+                }
+    
+                rowData.values.push(cellData);
+            }
+            
+            requestPaidOrder.resource.requests[0].updateCells.rows.push(rowData);
+        }
+        gPaidOrderRes = await gapi.client.sheets.spreadsheets.batchUpdate(requestPaidOrder);
+    }
 
     hideProgress('.btn-start');
 }
@@ -169,6 +362,7 @@ function fileChanged() {
             let lastOrderNum = null;
             for (let i = 0; i< paidOrders.length; i++) {
                 if (paidOrders[i].orderNum === lastOrderNum) {
+                    paidOrders[i-1].shouldRedColored = true;
                     paidOrders[i].shouldRedColored = true;
                 }
 

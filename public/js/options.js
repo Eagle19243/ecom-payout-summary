@@ -106,11 +106,13 @@ async function btnStartClicked() {
 
             if (col == 0) {
                 backgroundColor = Colors[value] || Colors.default;
-            } else if (col == 3 && value != "#DIV/0!") {
-                delete cellData.userEnteredValue.stringValue;
-                cellData.userEnteredValue.numberValue = Number(value.replace(/,/g, ''));
             } else if (col == 11) {
                 backgroundColor = rowData.values[0].userEnteredFormat.backgroundColor;
+                
+                if (value != "#DIV/0!") {
+                    delete cellData.userEnteredValue.stringValue;
+                    cellData.userEnteredValue.numberValue = Number(value.replace(/,/g, ''));
+                }
             } else if (col == 14) {
                 delete cellData.userEnteredValue.stringValue;
                 cellData.userEnteredValue.numberValue = value;

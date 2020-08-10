@@ -295,33 +295,33 @@ async function btnStartClicked() {
                     cellData.userEnteredFormat.backgroundColor = Colors['AMEX-CHRIS'];
                     cellData.userEnteredFormat.horizontalAlignment = 1;
                 } else if (i === 2 && j === 2) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A2, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A2, L10:L)';
                 } else if (i === 3 && j === 2) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A3, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A3, L10:L)';
                 } else if (i === 4 && j === 2) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A4, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A4, L10:L)';
                 } else if (i === 5 && j === 2) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A5, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A5, L10:L)';
                 } else if (i === 6 && j === 2) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A6, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A6, L10:L)';
                 } else if (i === 7 && j === 2) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A7, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A7, L10:L)';
                 } else if (i === 8 && j === 2) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A8, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, A8, L10:L)';
                 } else if (i === 2 && j === 4) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C2, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C2, L10:L)';
                 } else if (i === 3 && j === 4) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C3, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C3, L10:L)';
                 } else if (i === 4 && j === 4) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C4, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C4, L10:L)';
                 } else if (i === 5 && j === 4) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C5, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C5, L10:L)';
                 } else if (i === 6 && j === 4) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C6, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C6, L10:L)';
                 } else if (i === 7 && j === 4) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C7, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C7, L10:L)';
                 } else if (i === 8 && j === 4) {
-                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C8, D10:D)';
+                    cellData.userEnteredValue.formulaValue = '=SUMIF(A10:A, C8, L10:L)';
                 } else {
                     cellData.userEnteredValue.stringValue = '';
                 }
